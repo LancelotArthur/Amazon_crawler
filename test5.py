@@ -1,4 +1,5 @@
 from urllib.request import *
+import socket
 import time
 from header import *
 from test4 import *
@@ -6,6 +7,7 @@ import random
 import threading
 import queue
 
+socket.setdefaulttimeout(60)
 
 class thread_crawler(threading.Thread):
     def __init__(self, q, tc_id):
@@ -22,7 +24,7 @@ class thread_crawler(threading.Thread):
             headers = randHeader()
             req = Request(url=url, headers=headers)
             try:
-                urlopen(req)
+                urlopen(req, timeout = 60000)
                 page = urlopen(req).read().decode()
                 f3 = open('xxx' + str(self.id) + '.txt', 'w', errors='ignore')
                 f3.write(page)
